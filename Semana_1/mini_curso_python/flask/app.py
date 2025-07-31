@@ -18,7 +18,7 @@ def ola_mundo():
 # 5. Define outra rota que será acessada quando o usuário visitar '/sobre'.
 @app.route('/sobre')
 def sobre():
-    return "Está é a página sobre!"
+    return "<h1>Está é a página sobre!</h1>"
 
 # Rota dinâmica para exibir o perfil de um usuário
 # 6. Define uma rota que aceita um parâmetro dinâmico na URL.
@@ -52,7 +52,34 @@ def login():
             <input type="submit" value="Login">
           </form>    
         '''
-# 9. Inicia o servidor Flask.
+
+# Rota para consultar um produto com tratamento de erro
+# 8.1 Define uma rota que aceita um parâmetro dinâmico na URL.
+# Se o parâmetro não for um número inteiro válido, retorna um erro 404.
+# Isso é útil para evitar erros quando o usuário tenta acessar um produto com um ID inválido
+@app.route('/produto_v2/<id_produto>')
+def consultar_produto_v2(id_produto):
+    try:
+        # Tenta converter o id_produto para um inteiro
+        id_produto_int = int(id_produto)
+        # Se a conversão for bem-sucedida, você pode usar o id_produto_int
+        return f"<h1>Exibindo dados do produto com ID: {id_produto_int}</h1>"
+    except ValueError:
+        # Se a conversão falhar (por exemplo, se id_produto for 'xx')
+        # você pode retornar um erro 404 ou 400 (Bad Request)
+        # abort(404) é uma função do Flask que dispara a página de erro 404
+        return f"<h1>Erro: O ID do produto '{id_produto}' não é um número inteiro válido.</h1>", 400
+
+# 9. Define um manipulador de erros para o código de status 404 (Página não encontrada).
+# Isso será chamado quando o usuário tentar acessar uma URL que não existe.
+# Você pode personalizar a mensagem de erro ou renderizar um template HTML.
+@app.errorhandler(404)
+def pagina_nao_encontrada(error):
+    # Aqui você pode renderizar um template HTML personalizado
+    # ou apenas retornar uma string
+    return "<h1>Página não encontrada!</h1><p>A URL que você tentou acessar não existe ou o ID do produto não é um número inteiro válido.</p>", 404
+
+# 10. Inicia o servidor Flask.
 # O servidor ficará escutando na porta 5000 por padrão.
 # O parâmetro debug=True permite que o servidor reinicie automaticamente ao detectar mudanças no código.
 # O parâmetro host='0.0.0.0' permite que o servidor seja acessado de outras máquinas na rede.
