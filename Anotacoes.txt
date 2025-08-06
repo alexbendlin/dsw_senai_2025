@@ -1,0 +1,16 @@
+python.exe -m pip install --upgrade pip
+
+pip install -r requirements.txt
+
+
+------------------------------------
+blue: O Formatador de Código.
+pip install blue
+
+Uso: blue nome_script.py
+
+
+isort: O Organizador de Imports
+pip install isort
+
+Uso: isort . ou isort nome_script.py
