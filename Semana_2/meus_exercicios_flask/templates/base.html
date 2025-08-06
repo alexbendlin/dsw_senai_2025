@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Meu Site{% endblock %}</title>
+    <style>
+        body { 
+            font-family: sans-serif;
+            margin: 0; 
+        }
+        header { 
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center; 
+        }
+        footer { 
+            background-color: #f1f1f1;
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%; 
+        }
+        main { 
+            padding: 2rem;
+            padding-bottom: 6rem; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meu Site com Flask</h1>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

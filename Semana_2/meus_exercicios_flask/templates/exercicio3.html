@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 3 - Perfil</title>
+</head>
+<body>
+    <h1>Página de Perfil</h1>
+    {% if usuario_logado %}
+        <p>Bem-vindo de volta, {{ nome_usuario }}!</p>
+        <p>Aproveite o conteúdo exclusivo para membros.</p>
+    {% else %}
+        <p>Você não está logado.</p>
+        <p>Por favor, <a href="#">faça o login</a> para ver esta página.</p>
+    {% endif %}
+</body>
+</html>

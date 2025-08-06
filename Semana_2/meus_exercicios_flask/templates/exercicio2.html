@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 2 - Lista de Cursos</title>
+</head>
+<body>
+    <h1>Cursos Disponíveis</h1>
+    <ul>
+        {% for curso in cursos %}
+            <li>{{ curso }}</li>
+        {% else %}
+            <li>Nenhum curso disponível no momento.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
