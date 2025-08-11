@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Recebidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Dados recebidos</h1>
+        <p><strong>Nome:</strong> {{ nome }}</p>
+        <p><strong>E-mail:</strong> {{ email }}</p>
+        <p><strong>Mensagem:</strong> {{ mensagem }}</p>
+        <a href="/">Voltar</a>
+    </div>
+</body>
+</html>
