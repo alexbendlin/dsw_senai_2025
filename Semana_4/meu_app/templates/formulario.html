@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Flask-WTF</title>
+    <!-- Um CSS simples para deixar o formulário mais apresentável -->
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #4a4a4a; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Importante para o padding não aumentar a largura total */
+        }
+        .error-message { color: #d9534f; font-size: 0.9em; margin-top: 5px; }
+        .submit-btn {
+            width: 100%;
+            background-color: #5cb85c;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover { background-color: #4cae4c; }
+        .flash-message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro Didático</h1>
+
+        <!-- Bloco para exibir as mensagens 'flash' -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- O formulário aponta para a própria URL e usa o método POST -->
+        <form method="POST" action="" novalidate>
+            <!-- 
+                ESSA É A LINHA MAIS IMPORTANTE PARA A SEGURANÇA!
+                {{ form.hidden_tag() }} renderiza o campo oculto com o token CSRF.
+                Sem isso, o Flask-WTF não validará o formulário.
+                Tente remover esta linha e veja o que acontece!
+            -->
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <!-- Renderiza o label do campo 'nome' -->
+                {{ form.nome.label }}
+                
+                <!-- Renderiza o input do campo 'nome'. Podemos passar atributos HTML aqui. -->
+                {{ form.nome(class="form-control", placeholder="Digite seu nome") }}
+                
+                <!-- Loop para exibir as mensagens de erro de validação para este campo -->
+                {% if form.nome.errors %}
+                    {% for error in form.nome.errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="form-control", placeholder="exemplo@dominio.com") }}
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <!-- Renderiza o botão de submit -->
+                {{ form.submit(class="submit-btn") }}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

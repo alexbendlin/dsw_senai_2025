@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Didático Flask-WTF</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #4a4a4a; text-align: center; }
+        ul { list-style-type: none; padding: 0; }
+        li { background-color: #e9ecef; margin: 10px 0; padding: 15px; border-radius: 4px; }
+        a { text-decoration: none; color: #007bff; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>App Didático Flask-WTF</h1>
+        <p>Escolha uma das opções abaixo para ver os formulários em ação:</p>
+        <ul>
+            <li><a href="{{ url_for('formulario') }}">Formulário em Branco</a></li>
+            <li><a href="{{ url_for('formulario_com_argumentos') }}">Formulário Preenchido (com Argumentos)</a></li>
+            <li><a href="{{ url_for('formulario_com_objeto') }}">Formulário Preenchido (com Objeto)</a></li>
+        </ul>
+    </div>
+</body>
+</html>
