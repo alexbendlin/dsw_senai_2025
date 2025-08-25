@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Página Inicial{% endblock %}
+
+{% block conteudo %}
+    <h1>Bem-vindo à Revisão de Flask!</h1>
+    <p>Clique nos links abaixo para revisar os conceitos das primeiras semanas.</p>
+    <div class="links-revisao">
+        <a href="{{ url_for('revisao', semana_id='semana1') }}">Revisão Semana 1</a>
+        <a href="{{ url_for('revisao', semana_id='semana2') }}">Revisão Semana 2</a>
+        <a href="{{ url_for('revisao', semana_id='semana3') }}">Revisão Semana 3</a>
+        <a href="{{ url_for('revisao', semana_id='semana4') }}">Revisão Semana 4</a>
+    </div>
+{% endblock %}

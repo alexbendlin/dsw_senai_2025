@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block conteudo %}
+    <h2>{{ titulo }}</h2>
+    <div class="card">
+        <h3>Conceitos-Chave</h3>
+        <ul>
+            {% for conceito in conceitos %}
+                <li>{{ conceito }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card desafio">
+        <h3>Desafio de Prática</h3>
+        <p>{{ desafio }}</p>
+    </div>
+{% endblock %}

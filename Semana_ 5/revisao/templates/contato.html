@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Contato (Tradicional){% endblock %}
+
+{% block conteudo %}
+    <h2>Fale Conosco (Tradicional)</h2>
+    <div class="card">
+        <form method="POST" action="{{ url_for('contato') }}">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+            </div>
+            <button type="submit">Enviar Mensagem</button>
+        </form>
+    </div>
+{% endblock %}
