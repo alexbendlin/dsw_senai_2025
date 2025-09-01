@@ -9,7 +9,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Sua-Segurança-Mora-Aqui'
 
 app.config['SQLACHEMY_DATABASE_URI'] = 'sqlite:///meuapp.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meuapp.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
