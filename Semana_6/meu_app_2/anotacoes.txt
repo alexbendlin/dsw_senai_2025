@@ -1,0 +1,19 @@
+import os
+
+# Obtém o caminho absoluto para o diretório onde este arquivo (app.py) está
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'meuapp.db')
+
+@app.cli.command("init-db")
+def init_db_command():
+    """Apaga os dados existentes e cria novas tabelas."""
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+    print("Banco de dados inicializado na pasta do projeto!")
+		
+	
+Execute o seguinte comando no terminal, na pasta onde o arquivo app.py está localizado:
+
+flask init-db

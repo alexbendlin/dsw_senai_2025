@@ -40,6 +40,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Postagens</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +49,7 @@
                     <td>{{ usuario.id }}</td>
                     <td>{{ usuario.nome }}</td>
                     <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.postagens|length }}</td>
                 </tr>
                 {% else %}
                 <tr>

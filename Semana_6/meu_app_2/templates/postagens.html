@@ -31,6 +31,15 @@
                 <label for="descricao">Descrição:</label>
                 <input type="text" id="descricao" name="descricao" required>
             </div>
+            <div class="form-group">
+                <label for="usuario_id">Autor:</label>
+                <select name="usuario_id" id="usuario_id" required>
+                    <option value="" disabled selected>-- Selecione um autor --</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <button type="submit">Adicionar Postagem</button>
         </form>
         <h2>Postagens Cadastradas</h2>
@@ -40,6 +49,7 @@
                     <th>ID</th>
                     <th>Titulo</th>
                     <th>Descrição</th>
+                    <th>Autor</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +58,7 @@
                     <td>{{ postagem.id }}</td>
                     <td>{{ postagem.titulo }}</td>
                     <td>{{ postagem.descricao }}</td>
+                    <td>{{ postagem.autor.nome}}  </td>
                 </tr>
                 {% else %}
                 <tr>
