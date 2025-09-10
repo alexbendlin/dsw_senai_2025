@@ -1,0 +1,111 @@
+>>> app.py
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+# Inicializa a aplicação Flask
+app = Flask(__name__)
+
+# Configurações do banco de dados (SQLite para simplicidade)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'meubanco.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Inicializa a extensão SQLAlchemy
+db = SQLAlchemy(app)
+
+# Definição do Modelo (Tabela) de Usuário
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Usuario {self.nome}>'
+
+@app.route('/')
+def index():
+    return "Aplicação Flask com SQLAlchemy!"
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5002)
+
+#########################################################
+
+flask shell
+
+#########################################################
+
+Criando o Banco de Dados e as Tabelas
+
+>>> from app import db
+>>> db.create_all()
+>>> exit()
+
+#########################################################
+
+Inserindo Dados (Create)
+
+>>> from app import db, Usuario
+
+>>> novo_usuario = Usuario(nome='Ana Silva', email='ana.silva@example.com')
+>>> db.session.add(novo_usuario)
+>>> db.session.commit()
+
+>>> usuario2 = Usuario(nome='Carlos Pereira', email='carlos.p@example.com')
+>>> usuario3 = Usuario(nome='Mariana Costa', email='mari.costa@example.com')
+>>> db.session.add_all([usuario2, usuario3])
+>>> db.session.commit()
+>>> exit()
+
+#########################################################
+
+Consultando Dados (Read)
+
+>>> from app import Usuario
+>>> todos_os_usuarios = Usuario.query.all()
+>>> print(todos_os_usuarios)
+
+>>> usuario_por_id = Usuario.query.get(1)
+>>> print(usuario_por_id)
+
+>>> usuario_por_nome = Usuario.query.filter_by(nome='Carlos Pereira').first()
+>>> print(usuario_por_nome)
+
+>>> usuarios_com_a = Usuario.query.filter(Usuario.nome.like('%a%')).all()
+>>> print(usuarios_com_a)
+
+>>> exit()
+
+#########################################################
+
+Atualizando Dados (Update)
+
+>>> from app import db, Usuario
+>>> usuario_para_atualizar = Usuario.query.filter_by(nome='Ana Silva').first()
+>>> usuario_para_atualizar.email = 'ana.silva.nova@provedor.com'
+>>> db.session.commit()
+
+>>> print(Usuario.query.get(1).email)
+
+#########################################################
+
+Excluindo Dados (Delete)
+
+>>> from app import db, Usuario
+>>> usuario_para_excluir = Usuario.query.filter_by(nome='Mariana Costa').first()
+>>> db.session.delete(usuario_para_excluir)
+>>> db.session.commit()
+
+>>> Usuario.query.all()
+
+@@@@@
+db.session.delete(Usuario.query.filter_by(nome='Carlos Pereira').first())
+db.session.commit()
+@@@@@
+
+#########################################################
+
+db.session.commit(): É o que efetivamente as salva no banco de dados.
+
+db.session.rollback(): É que o reverte as alterações

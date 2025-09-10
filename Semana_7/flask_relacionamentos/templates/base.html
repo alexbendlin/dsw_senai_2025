@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}App de Relacionamentos{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="nav-brand">Flask Relacionamentos</a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('um_para_um') }}">Um-para-Um</a></li>
+                <li><a href="{{ url_for('um_para_muitos') }}">Um-para-Muitos</a></li>
+                <li><a href="{{ url_for('muitos_para_muitos') }}">Muitos-para-Muitos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Projeto Didático para demonstrar relacionamentos com Flask e SQLAlchemy.</p>
+        </div>
+    </footer>
+</body>
+</html>

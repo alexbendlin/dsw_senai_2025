@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}RelacionamentoUm-para-Um{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Relacionamento Um-para-Um (1:1)</h1>
+        <p><strong>Exemplo:</strong> `Usuário` e `Perfil`</p>
+    </div>
+
+    <div class="content-section">
+        <h2>Explicação Conceitual</h2>
+        <p>
+            Neste tipo de relacionamento, cada registro na Tabela A está ligado a <strong>no máximo um</strong> registro na Tabela B, e vice-versa. Usamos isso para separar dados que nem sempre são necessários (como uma biografia de usuário) dos dados principais (como o nome de usuário), otimizando consultas e a organização dos dados.
+        </p>
+    </div>
+
+    <div class="content-section">
+        <h2>Código do Modelo (`models.py`)</h2>
+        <pre><code>
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome_usuario = db.Column(db.String(80), unique=True, nullable=False)
+    
+    # 'uselist=False' é crucial para definir que este é um relacionamento 1:1.
+    perfil = db.relationship('Perfil', back_populates='usuario', uselist=False, cascade='all, delete-orphan')
+
+class Perfil(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bio = db.Column(db.String(200), nullable=True)
+    
+    # A ForeignKey conecta o Perfil ao Usuário. 'unique=True' garante que um user_id
+    # não possa aparecer mais de uma vez, reforçando a regra do 1:1.
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique=True, nullable=False)
+    
+    usuario = db.relationship('Usuario', back_populates='perfil')
+        </code></pre>
+    </div>
+
+    <div class="content-section">
+        <h2>Demonstração ao Vivo</h2>
+        <div class="demo-container">
+            <div class="data-display">
+                <h3>Usuários e Perfis Existentes</h3>
+                {% if usuarios %}
+                    <ul>
+                    {% for usuario in usuarios %}
+                        <li>
+                            <strong>Usuário:</strong> {{ usuario.nome_usuario }}
+                            <br>
+                            <em><strong>Bio do Perfil:</strong> {{ usuario.perfil.bio if usuario.perfil else 'Sem perfil' }}</em>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Nenhum usuário cadastrado.</p>
+                {% endif %}
+            </div>
+            <div class="form-container">
+                <h3>Adicionar Novo Usuário e Perfil</h3>
+                <form action="{{ url_for('um_para_um') }}" method="post">
+                    <div class="form-group">
+                        <label for="nome_usuario">Nome de Usuário:</label>
+                        <input type="text" id="nome_usuario" name="nome_usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

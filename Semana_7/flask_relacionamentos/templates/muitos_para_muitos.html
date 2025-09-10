@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Relacionamento Muitos-para-Muitos{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Relacionamento Muitos-para-Muitos (M:M)</h1>
+        <p><strong>Exemplo:</strong> `Aluno` e `Curso`</p>
+    </div>
+
+    <div class="content-section">
+        <h2>Explicação Conceitual</h2>
+        <p>
+            Neste relacionamento, um registro da Tabela A pode se relacionar com <strong>vários</strong> registros da Tabela B, e um registro da Tabela B também pode se relacionar com <strong>vários</strong> da Tabela A. Para implementar isso, é necessária uma terceira tabela, chamada de <strong>tabela de associação</strong> (ou tabela de junção), que contém apenas as chaves estrangeiras de A e B.
+        </p>
+    </div>
+
+    <div class="content-section">
+        <h2>Código do Modelo (`models.py`)</h2>
+        <pre><code>
+# 1. Definimos a tabela de associação
+associacao_de_cursos_alunos = db.Table('aluno_cursos',
+    db.Column('aluno_id', db.Integer, db.ForeignKey('aluno.id'), primary_key=True),
+    db.Column('curso_id', db.Integer, db.ForeignKey('curso.id'), primary_key=True)
+)
+
+# 2. Definimos os modelos principais
+class Aluno(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+
+    # O parâmetro 'secondary' aponta para a tabela de associação.
+    cursos = db.relationship('Curso', secondary=associacao_de_cursos_alunos, back_populates='alunos')
+
+class Curso(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+
+    alunos = db.relationship('Aluno', secondary=associacao_de_cursos_alunos, back_populates='cursos')
+    </div>
+
+    <div class="content-section">
+        <h2>Demonstração ao Vivo</h2>
+        <div class="demo-container">
+            <div class="data-display">
+                <h3>Cursos e Alunos Inscritos</h3>
+                {% for curso in cursos %}
+                    <li>
+                        <strong>Curso:</strong> {{ curso.nome }}
+                        <ul>
+                            {% for aluno in curso.alunos %}
+                                <li>{{ aluno.nome }}</li>
+                            {% else %}
+                                <li><em>Nenhum aluno inscrito.</em></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </div>
+            <div class="data-display">
+                <h3>Alunos e Seus Cursos</h3>
+                {% for aluno in alunos %}
+                    <li>
+                        <strong>Aluno:</strong> {{ aluno.nome }}
+                        <ul>
+                            {% for curso in aluno.cursos %}
+                                <li>{{ curso.nome }}</li>
+                            {% else %}
+                                <li><em>Não está em nenhum curso.</em></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="demo-container" style="margin-top: 2rem;">
+            <div class="form-container" style="flex-basis: 100%;">
+                 <h3>Inscrever Aluno em um Curso</h3>
+                <form action="{{ url_for('muitos_para_muitos') }}" method="post">
+                    <div class="form-group">
+                        <label for="aluno_id">Selecione o Aluno:</label>
+                        <select name="aluno_id" id="aluno_id" required>
+                            {% for aluno in alunos %}
+                                <option value="{{ aluno.id }}">{{ aluno.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="curso_id">Selecione o Curso:</label>
+                        <select name="curso_id" id="curso_id" required>
+                            {% for curso in cursos %}
+                                <option value="{{ curso.id }}">{{ curso.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Inscrever</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

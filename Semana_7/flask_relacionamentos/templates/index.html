@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Início - App de Relacionamentos{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <h1>Bem-vindo ao App Didático de Relacionamentos</h1>
+        <p>Explore os exemplos práticos de como implementar relacionamentos entre tabelas de banco de dados usando Flask e SQLAlchemy.</p>
+    </div>
+
+    <div class="card-container">
+        <div class="card">
+            <h2>One-to-One (1:1)</h2>
+            <p>Um registro em uma tabela está associado a no máximo um registro em outra tabela. É como uma pessoa e seu passaporte: uma pessoa tem um passaporte, e um passaporte pertence a uma única pessoa.</p>
+            <a href="{{ url_for('um_para_um') }}" class="btn">Ver Exemplo</a>
+        </div>
+        <div class="card">
+            <h2>One-to-Many (1:M)</h2>
+            <p>Um registro em uma tabela pode estar associado a muitos registros em outra. É como uma mãe e seus filhos: uma mãe pode ter vários filhos, mas cada filho tem apenas uma mãe biológica.</p>
+            <a href="{{ url_for('um_para_muitos') }}" class="btn">Ver Exemplo</a>
+        </div>
+        <div class="card">
+            <h2>Many-to-Many (M:M)</h2>
+            <p>Um registro em uma tabela pode estar associado a muitos registros na outra, e vice-versa. É como alunos e cursos: um aluno pode fazer vários cursos, e um curso pode ter vários alunos.</p>
+            <a href="{{ url_for('muitos_para_muitos') }}" class="btn">Ver Exemplo</a>
+        </div>
+    </div>
+{% endblock %}
