@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="card-grid">
+    <div class="card">
+        <h2>{{ total_receitas }}</h2>
+        <p>Receitas Cadastradas</p>
+    </div>
+    <div class="card">
+        <h2>{{ total_chefs }}</h2>
+        <p>Chefs na Plataforma</p>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <h2>Receitas por Chef</h2>
+    <canvas id="receitasPorChefChart"></canvas>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('receitasPorChefChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar', // Tipo do gráfico (barra, pizza, etc.)
+            data: {
+                labels: {{ labels_grafico|tojson }},
+                datasets: [{
+                    label: '# de Receitas',
+                    data: {{ dados_grafico|tojson }},
+                    backgroundColor: 'rgba(42, 157, 143, 0.6)',
+                    borderColor: 'rgba(42, 157, 143, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

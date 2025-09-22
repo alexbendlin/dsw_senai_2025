@@ -77,7 +77,7 @@ def detalhes_chef(chef_id):
 
 # Bloco para executar a aplicação
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True)
 
 
 # --- Comandos CLI ---

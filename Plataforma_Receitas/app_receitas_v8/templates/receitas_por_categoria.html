@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Receitas na Categoria: "{{ categoria.nome }}"</h1>
+    
+    <div class="card-grid">
+        {% for receita in receitas %}
+            <div class="card">
+                <a href="{{ url_for('detalhes_receita', receita_id=receita.id) }}">
+                    <h2>{{ receita.titulo }}</h2>
+                </a>
+                <p>Por: {{ receita.chef.nome }}</p>
+            </div>
+        {% else %}
+            <p>Ainda não há receitas nesta categoria.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

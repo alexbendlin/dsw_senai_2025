@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Cadastro de Chef</h1>
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.nome.label }}
+            {{ form.nome(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.especialidade.label }}
+            {{ form.especialidade(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+             {% if form.email.errors %}
+                <ul class=errors>
+                {% for error in form.email.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class="form-control") }}
+             {% if form.confirm_password.errors %}
+                <ul class=errors>
+                {% for error in form.confirm_password.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn") }}
+        </div>
+    </form>
+    <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça login</a></p>
+</div>
+{% endblock %}

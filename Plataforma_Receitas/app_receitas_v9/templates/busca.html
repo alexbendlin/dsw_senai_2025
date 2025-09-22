@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if query %}
+        <h1>Resultados da busca por: "{{ query }}"</h1>
+    {% else %}
+        <h1>Busca de Receitas</h1>
+    {% endif %}
+    
+    <div class="card-grid">
+        {% for receita in resultados %}
+            <div class="card">
+                <a href="{{ url_for('detalhes_receita', receita_id=receita.id) }}">
+                    <h2>{{ receita.titulo }}</h2>
+                </a>
+                <p>Por: {{ receita.chef.nome }}</p>
+
+                <div class="categorias">
+                    {% for cat in receita.categorias %}
+                        <a href="{{ url_for('receitas_por_categoria', categoria_id=cat.id) }}" class="tag">{{ cat.nome }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% if query %}
+                <p>Nenhuma receita encontrada para sua busca. Tente outros termos.</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

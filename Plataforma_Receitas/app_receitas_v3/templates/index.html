@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Todas as Receitas</h1>
+    <div class="card-grid">
+        {% for receita in receitas %}
+            <div class="card">
+                <h2>{{ receita.titulo }}</h2>
+                <p>Por: <a href="{{ url_for('detalhes_chef', chef_id=receita.chef.id) }}">{{ receita.chef.nome }}</a></p>
+                <h4>Ingredientes:</h4>
+                <ul>
+                    {% for assoc in receita.ingredientes_associados %}
+                        <li>
+                            <span>{{ assoc.ingrediente.nome|capitalize }}</span>
+                            <span>{{ assoc.quantidade }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

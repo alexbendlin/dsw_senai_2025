@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Editar Receita: {{ receita.titulo }}</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" name="titulo" value="{{ receita.titulo }}" required>
+        </div>
+        <div class="form-group">
+            <label for="instrucoes">Instruções</label>
+            <textarea id="instrucoes" name="instrucoes" rows="8" required>{{ receita.instrucoes }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="categorias_str">Categorias</label>
+            <input type="text" id="categorias_str" name="categorias_str" value="{{ categorias_atuais }}">
+            <small>Separe as categorias por vírgula.</small>
+        </div>
+
+        <!-- Nota: A edição de ingredientes não foi implementada neste guia por simplicidade -->
+        
+        <button type="submit" class="btn">Salvar Alterações</button>
+    </form>
+{% endblock %}

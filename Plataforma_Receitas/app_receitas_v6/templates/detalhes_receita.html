@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="receita-detalhe card">
+    <h1>{{ receita.titulo }}</h1>
+    <p>Por: <a href="{{ url_for('detalhes_chef', chef_id=receita.chef.id) }}">{{ receita.chef.nome }}</a></p>
+    
+    <hr>
+
+    <h3>Ingredientes</h3>
+    <ul>
+        {% for assoc in receita.ingredientes_associados %}
+            <li>{{ assoc.ingrediente.nome|capitalize }}: {{ assoc.quantidade }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Instruções</h3>
+    <p>{{ receita.instrucoes|replace('\n', '<br>')|safe }}</p>
+
+    <h4>Enviar para um amigo</h4>
+    <form action="{{ url_for('enviar_receita', receita_id=receita.id) }}" method="POST" class="form-inline">
+        <input type="email" name="email_destinatario" placeholder="Email do amigo" required>
+        <button type="submit" class="btn">Enviar por E-mail</button>
+    </form>
+    
+    <button onclick="window.print()" class="btn btn-print">Imprimir Receita</button>
+</div>
+{% endblock %}
