@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Página Protegida!</h1>
+    <p>Se você está vendo esta página, é porque você conseguiu fazer o login com sucesso.</p>
+    <p>Parabéns, <strong>{{ current_user.username }}</strong>!</p>
+{% endblock %}

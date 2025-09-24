@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>App com Flask-Login</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        nav { background-color: #f0f0f0; padding: 1em; margin-bottom: 1em; }
+        nav a { margin-right: 1em; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a>
+        <a href="{{ url_for('protegido') }}">Página Protegida</a>
+        
+        {% if current_user.is_authenticated %}
+            <span>| Olá, {{ current_user.username }}!</span>
+            <a href="{{ url_for('logout') }}">Sair (Logout)</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Entrar (Login)</a>
+        {% endif %}
+    </nav>
+    
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
